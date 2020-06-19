@@ -22,6 +22,10 @@ namespace QLearning
     {
         public MainWindow()
         {
+            var alg = new QLearningAlgorithm();
+            alg.Initialize();
+            alg.RunEpisode();
+
             InitializeComponent();
         }
     }
