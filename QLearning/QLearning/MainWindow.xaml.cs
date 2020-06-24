@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,7 @@ namespace QLearning
         public MainWindow()
         {
             _algorithm = new QLearningAlgorithm();
+            _algorithm.Changed += UpdateMapOnScreen;
             _algorithm.Initialize();            
 
             InitializeComponent();
@@ -35,5 +37,13 @@ namespace QLearning
             _algorithm.RunEpisode();
             this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
+
+        public void UpdateMapOnScreen(int currentState)
+        {
+            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, currentState);
+            //Thread.Sleep(1000);
+        }
+
+        public delegate void UpdateMap(int currentState);
     }
 }

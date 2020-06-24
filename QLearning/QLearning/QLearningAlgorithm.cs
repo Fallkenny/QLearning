@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static QLearning.MainWindow;
 
 namespace QLearning
 {
@@ -14,7 +15,7 @@ namespace QLearning
         public Random Random { get; set; } = new Random();
         public QLearningNode[,] Map;
 
-        
+        public event UpdateMap Changed;
 
         public void Initialize()
         {
@@ -56,6 +57,8 @@ namespace QLearning
                 performedDirections.Add(action.Direction);
                 var nextState = TransitionFunction(CurrentState, action);
                 CurrentState = nextState;
+
+                this.Changed(nextState.Id);
             }
             while (CurrentState.Reward != Rewards.GOAL);
         }
