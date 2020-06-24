@@ -27,6 +27,7 @@ namespace QLearning
             alg.RunEpisode();
 
             InitializeComponent();
+            this.MapViewer.DrawMap(alg.Map, 12, 10, alg.CurrentState.Id);
         }
     }
 }

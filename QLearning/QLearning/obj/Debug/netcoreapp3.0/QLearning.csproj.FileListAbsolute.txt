@@ -15,3 +15,6 @@ C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\QLearning.Assemb
 C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\QLearning.AssemblyInfo.cs
 C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\QLearning.dll
 C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\QLearning.pdb
+C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\MapViewer.g.cs
+C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\MapViewer.baml
+C:\GitHub\QLearning\QLearning\QLearning\obj\Debug\netcoreapp3.0\GeneratedInternalTypeHelper.g.cs

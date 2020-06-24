@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QLearning
 {
-    class QLearningNode // representa o nó
+    public class QLearningNode // representa o nó
     {
         public QLearningNode(int reward, int id, int x, int y)
         {

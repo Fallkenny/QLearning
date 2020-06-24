@@ -6,9 +6,9 @@ namespace QLearning
 {
     public static class Rewards
     {
-        public static int VOID = -1000;
-        public static int NORMALSPACE = 1;
-        public static int OBSTACLE = -100;
-        public static int GOAL = 100;
+        public const int VOID = -1000;
+        public const int NORMALSPACE = 1;
+        public const int OBSTACLE = -100;
+        public const int GOAL = 100;
     }
 }
