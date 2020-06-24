@@ -13,6 +13,9 @@ namespace QLearning
 
         public Random Random { get; set; } = new Random();
         public QLearningNode[,] Map;
+
+        
+
         public void Initialize()
         {
             var scenario = new Scenario();
@@ -55,7 +58,6 @@ namespace QLearning
                 CurrentState = nextState;
             }
             while (CurrentState.Reward != Rewards.GOAL);
-            var a = 1;
         }
 
         private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action)

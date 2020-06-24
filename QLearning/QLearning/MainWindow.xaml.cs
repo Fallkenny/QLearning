@@ -20,14 +20,20 @@ namespace QLearning
     /// </summary>
     public partial class MainWindow : Window
     {
+        QLearningAlgorithm _algorithm;
         public MainWindow()
         {
-            var alg = new QLearningAlgorithm();
-            alg.Initialize();
-            alg.RunEpisode();
+            _algorithm = new QLearningAlgorithm();
+            _algorithm.Initialize();            
 
             InitializeComponent();
-            this.MapViewer.DrawMap(alg.Map, 12, 10, alg.CurrentState.Id);
+            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _algorithm.RunEpisode();
+            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
     }
 }
