@@ -8,14 +8,16 @@ namespace QLearning
 {
     class QLearningAlgorithm
     {
-        public QLearningNode CurrentState { get; private set; }
+        public QLearningNode CurrentState { get; set; }
         public int GoalID { get; private set; }
         Dictionary<int, List<MapAction>> QTable { get; set; }
 
         public Random Random { get; set; } = new Random();
+        public int Episodes { get; private set; } = 1;
+
         public QLearningNode[,] Map;
 
-        public event UpdateMap Changed;
+        public QLearningNode StartState { get; private set; }
 
         public void Initialize()
         {
@@ -39,13 +41,13 @@ namespace QLearning
                     QTable.Add(id, actions);
                 }
             this.Map = scenario.Map;
+            this.StartState = scenario.StartPosition;
             this.CurrentState = scenario.StartPosition;
         }
 
-        public void RunEpisode()
+        public void DoNextStep()
         {
-            var performedDirections = new List<eDirection>();
-            do
+            if (CurrentState.Reward != Rewards.GOAL)
             {
                 var possibleActions = QTable[CurrentState.Id];
                 var allActionsHaveSameReward = possibleActions.Select(action => action.Reward).Distinct().Count() == 1;
@@ -54,14 +56,15 @@ namespace QLearning
                     action = possibleActions.OrderByDescending(act => act.Reward).FirstOrDefault();
                 else
                     action = possibleActions.ElementAt(Random.Next(0, possibleActions.Count));
-                performedDirections.Add(action.Direction);
+
                 var nextState = TransitionFunction(CurrentState, action);
                 CurrentState = nextState;
-
-                System.Threading.Thread.Sleep(100);
-                //this.Changed(nextState.Id);
             }
-            while (CurrentState.Reward != Rewards.GOAL);
+            else
+            {
+                this.CurrentState = StartState;
+                this.Episodes++;
+            }
         }
 
         private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action)
@@ -88,7 +91,7 @@ namespace QLearning
 
                 case eDirection.Up:
                 default:
-                    return Map[currentState.X, CurrentState.Y-1];
+                    return Map[currentState.X, CurrentState.Y - 1];
 
             }
         }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace QLearning
 {
@@ -24,34 +25,29 @@ namespace QLearning
         QLearningAlgorithm _algorithm;
         public MainWindow()
         {
-            _algorithm = new QLearningAlgorithm();
-            //_algorithm.Changed += UpdateMapOnScreen;
-            _algorithm.Initialize();
-            CompositionTarget.Rendering += CompositionTarget_Rendering; ;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Interval = new TimeSpan(1);
+            timer.Start();
             InitializeComponent();
-            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
 
-        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e)
         {
-            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
+            if (_algorithm == null)
+            {
+                _algorithm = new QLearningAlgorithm();
+                _algorithm.Initialize();
+            }
+            this._episodeLabel.Content = $"Episódio: {_algorithm.Episodes.ToString() }";
 
+            _algorithm.DoNextStep();
+            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(()=>_algorithm.RunEpisode());
-            //this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
+            _algorithm.CurrentState = _algorithm.StartState;
         }
-
-        
-
-        public void UpdateMapOnScreen(int currentState)
-        {
-            
-            //Thread.Sleep(1000);
-        }
-
-        public delegate void UpdateMap(int currentState);
     }
 }

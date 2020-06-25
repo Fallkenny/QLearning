@@ -28,6 +28,7 @@ namespace QLearning
 
         public void DrawMap(QLearningNode[,] map, int width, int height, int currentPosition)
         {
+            MapCanvas.Children.Clear();
             int nextX = 0;
             int nextY = 0;
 
