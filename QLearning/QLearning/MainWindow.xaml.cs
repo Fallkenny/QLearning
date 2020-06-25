@@ -25,22 +25,30 @@ namespace QLearning
         public MainWindow()
         {
             _algorithm = new QLearningAlgorithm();
-            _algorithm.Changed += UpdateMapOnScreen;
-            _algorithm.Initialize();            
-
+            //_algorithm.Changed += UpdateMapOnScreen;
+            _algorithm.Initialize();
+            CompositionTarget.Rendering += CompositionTarget_Rendering; ;
             InitializeComponent();
             this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
 
+        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _algorithm.RunEpisode();
-            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
+            Task.Run(()=>_algorithm.RunEpisode());
+            //this.MapViewer.DrawMap(_algorithm.Map, 12, 10, _algorithm.CurrentState.Id);
         }
+
+        
 
         public void UpdateMapOnScreen(int currentState)
         {
-            this.MapViewer.DrawMap(_algorithm.Map, 12, 10, currentState);
+            
             //Thread.Sleep(1000);
         }
 

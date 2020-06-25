@@ -49,7 +49,7 @@ namespace QLearning
 
         private Rectangle GetSpaceRect(QLearningNode qLearningNode, bool currentPosition)
         {
-            SolidColorBrush color = Brushes.Transparent;
+            SolidColorBrush color = Brushes.White;
             if (currentPosition)
                 color = Brushes.Blue;
             else

@@ -58,7 +58,8 @@ namespace QLearning
                 var nextState = TransitionFunction(CurrentState, action);
                 CurrentState = nextState;
 
-                this.Changed(nextState.Id);
+                System.Threading.Thread.Sleep(100);
+                //this.Changed(nextState.Id);
             }
             while (CurrentState.Reward != Rewards.GOAL);
         }
