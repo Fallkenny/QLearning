@@ -53,7 +53,7 @@ namespace QLearning
 
                 var allActionsHaveSameReward = possibleActions.Select(action => action.Reward).Distinct().Count() == 1;
                 MapAction action;
-                if (Random.Next(1, 101) > 30 && !allActionsHaveSameReward)
+                if (Random.Next(0, 100) > 30 && !allActionsHaveSameReward)
                     action = possibleActions.OrderByDescending(act => act.Reward).FirstOrDefault();
                 else
                     action = possibleActions.ElementAt(Random.Next(0, possibleActions.Count));
