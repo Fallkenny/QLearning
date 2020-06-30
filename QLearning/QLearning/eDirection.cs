@@ -11,4 +11,24 @@ namespace QLearning
         Left,
         Right
     }
+
+    public static class DirectionExtension
+    {
+        public static string Arrow(this eDirection eDirection)
+        {
+            //↑↓→←
+            switch (eDirection)
+            {
+                case eDirection.Down:
+                    return "↓";
+                case eDirection.Up:
+                    return "↑";
+                case eDirection.Left:
+                    return "←";                    
+                case eDirection.Right:
+                default:
+                    return "→";
+            }
+        }
+    }
 }
