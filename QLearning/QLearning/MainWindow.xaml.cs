@@ -85,5 +85,14 @@ namespace QLearning
             this._canRun = false;
             this._bestPathLabel.Content = string.Empty;
         }
+
+        private void _sliderRandom_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var newValue = (int)e.NewValue;
+            _randomValue.Content = $"{newValue}%";
+
+            if (_algorithm != null)
+                _algorithm.CurrentRandom = newValue;
+        }
     }
 }

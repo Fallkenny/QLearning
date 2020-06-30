@@ -5,23 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QLearning"
         mc:Ignorable="d"
-        Title="QLearning" Height="802" Width="565" ResizeMode="NoResize" WindowStyle="SingleBorderWindow">
+        Title="QLearning" Height="702" Width="565" ResizeMode="NoResize" WindowStyle="SingleBorderWindow">
     <Grid>
         <local:MapViewer x:Name="MapViewer" HorizontalAlignment="Left" Height="379" Margin="32,14,0,0" VerticalAlignment="Top" Width="510"/>
-        <Label x:Name="_episodeLabel" Content="0" HorizontalAlignment="Left" Margin="122,412,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="_movesLabel" Content="0" HorizontalAlignment="Left" Margin="122,442,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="_speedLabel" Content="Velocidade" HorizontalAlignment="Left" Margin="122,473,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="_comboTime" HorizontalAlignment="Left" Margin="196,475,0,0" VerticalAlignment="Top" Width="116" >
+        <Label x:Name="_episodeLabel" Content="0" HorizontalAlignment="Left" Margin="122,362,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_movesLabel" Content="0" HorizontalAlignment="Left" Margin="122,392,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_speedLabel" Content="Velocidade:" HorizontalAlignment="Left" Margin="122,423,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="_comboTime" HorizontalAlignment="Left" Margin="198,425,0,0" VerticalAlignment="Top" Width="116" >
             <ComboBoxItem Content="Insana" IsSelected="True" Tag="1"/>
             <ComboBoxItem Content="Rápida"  Tag="100000"/>
             <ComboBoxItem Content="Média"  Tag="1900000"/>
             <ComboBoxItem Content="Lenta"  Tag="9900000"/>
             <ComboBoxItem Content="Muito Lenta" Tag="10000000"/>
         </ComboBox>
-        <Label Content="Melhor caminho:" HorizontalAlignment="Left" Margin="122,504,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="_bestPathLabel" Content="" HorizontalAlignment="Left" Margin="123,536,0,0" VerticalAlignment="Top" FontSize="24" Width="327" Height="136" FontWeight="Bold"/>
-        <Button Content="▶" HorizontalAlignment="Left" Margin="323,677,0,0" VerticalAlignment="Top" Height="78" Width="61" FontSize="50" Click="play_Click"/>
-        <Button Content="I I" HorizontalAlignment="Left" Margin="256,677,0,0" VerticalAlignment="Top" Height="78" Width="62" FontSize="50" Click="pause_Click" FontWeight="Bold"/>
-        <Button Content="↻" HorizontalAlignment="Left" Margin="189,677,0,0" VerticalAlignment="Top" Height="78" Width="62" FontSize="50" Click="restart_Click" FontWeight="Bold"/>
+        <Label Content="Aleatoriedade:" HorizontalAlignment="Left" Margin="122,454,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_randomValue" Content="30%" HorizontalAlignment="Left" Margin="204,454,0, 0"/>
+        <Slider x:Name="_sliderRandom" Value="30" Maximum="100" Minimum="0" Width="200" HorizontalAlignment="Left" Margin="122, 480, 0,0" VerticalAlignment="Top" ValueChanged="_sliderRandom_ValueChanged"/>
+        <Label Content="Melhor caminho:" HorizontalAlignment="Left" Margin="122,500,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_bestPathLabel" Content="" HorizontalAlignment="Left" Margin="123,510,0,0" VerticalAlignment="Top" FontSize="24" Width="327" Height="136" FontWeight="Bold"/>
+        <Button Content="▶" HorizontalAlignment="Left" Margin="323,577,0,0" VerticalAlignment="Top" Height="78" Width="61" FontSize="50" Click="play_Click"/>
+        <Button Content="I I" HorizontalAlignment="Left" Margin="256,577,0,0" VerticalAlignment="Top" Height="78" Width="62" FontSize="50" Click="pause_Click" FontWeight="Bold"/>
+        <Button Content="↻" HorizontalAlignment="Left" Margin="189,577,0,0" VerticalAlignment="Top" Height="78" Width="62" FontSize="50" Click="restart_Click" FontWeight="Bold"/>
     </Grid>
 </Window>

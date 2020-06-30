@@ -14,6 +14,7 @@ namespace QLearning
         private const string IN_PROGRESS = "Calculando...";
         public string BestPath { get; set; } = IN_PROGRESS;
         public Random Random { get; set; } = new Random();
+        public int CurrentRandom { get; set; } = 30;
         public int Episodes { get; private set; } = 1;
         public int Moves { get; private set; } = 0;
         public QLearningNode[,] Map;
@@ -55,7 +56,7 @@ namespace QLearning
 
                 var allActionsHaveSameReward = possibleActions.Select(action => action.Reward).Distinct().Count() == 1;
                 MapAction action;
-                if (Random.Next(0, 100) > 30 && !allActionsHaveSameReward)
+                if (Random.Next(0, 100) > this.CurrentRandom && !allActionsHaveSameReward)
                     action = possibleActions.OrderByDescending(act => act.Reward).FirstOrDefault();
                 else
                     action = possibleActions.ElementAt(Random.Next(0, possibleActions.Count));
