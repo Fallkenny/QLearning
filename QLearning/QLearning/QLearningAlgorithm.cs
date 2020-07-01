@@ -110,14 +110,17 @@ namespace QLearning
 
             return path.Length < 500 ? path : IN_PROGRESS;
         }
+
         private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action)
             => TransitionFunction(currentState, action, true);
+
         private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action, bool mustUpdate)
         {
             var next = GetNextState(currentState, action);
 
             var nextStateMaxPossibleReward = QTable[next.Id].Max(act => act.Reward);
-            action.Reward = next.Reward + 0.5 * nextStateMaxPossibleReward;
+            if (mustUpdate)
+                action.Reward = next.Reward + 0.5 * nextStateMaxPossibleReward;
             return next;
         }
 
