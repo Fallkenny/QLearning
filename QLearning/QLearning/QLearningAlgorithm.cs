@@ -9,7 +9,6 @@ namespace QLearning
     class QLearningAlgorithm
     {
         public QLearningNode CurrentState { get; set; }
-        public int GoalID { get; private set; }
         Dictionary<int, List<MapAction>> QTable { get; set; }
         private const string IN_PROGRESS = "Calculando...";
         public string BestPath { get; set; } = IN_PROGRESS;
@@ -18,6 +17,9 @@ namespace QLearning
         public int Episodes { get; private set; } = 1;
         public int Moves { get; private set; } = 0;
         public QLearningNode[,] Map;
+        private bool _qTableChanged;
+        private int _episodesWithoutChange;
+
         public QLearningNode StartState { get; private set; }
         public bool ReachedGlobalMaximum { get; set; } = false;
         public int EqualPathCalculations { get; private set; }
@@ -60,7 +62,13 @@ namespace QLearning
                     action = possibleActions.OrderByDescending(act => act.Reward).FirstOrDefault();
                 else
                     action = possibleActions.ElementAt(Random.Next(0, possibleActions.Count));
+                var oldReward = action.Reward;
                 var nextState = TransitionFunction(CurrentState, action);
+                var newReward = action.Reward;
+
+                if (oldReward != newReward)
+                    _qTableChanged = true;
+
                 Moves++;
                 CurrentState = nextState;
             }
@@ -68,16 +76,17 @@ namespace QLearning
             {
                 this.CurrentState = StartState;
                 this.Episodes++;
-                if (Episodes >= 20 || Episodes >= 20 && Episodes % 10 == 0)
-                {
-                    var previousPath = this.BestPath;
-                    this.BestPath = this.CalculateBestPath();
-                    if (previousPath.Equals(this.BestPath))
-                        EqualPathCalculations++;
+                if (!_qTableChanged)
+                    _episodesWithoutChange++;
+                else
+                    _episodesWithoutChange = 0;
 
-                    if (EqualPathCalculations > 200)
-                        this.ReachedGlobalMaximum = true;
-                }
+                if (_episodesWithoutChange >= 10)
+                    this.ReachedGlobalMaximum = true;
+
+                _qTableChanged = false;
+                if (Episodes % 10 == 0)
+                    this.BestPath = this.CalculateBestPath();
             }
         }
 
@@ -93,7 +102,7 @@ namespace QLearning
                 var possibleActions = QTable[state.Id].ToList();
                 var action = possibleActions.OrderByDescending(act => act.Reward).FirstOrDefault();
                 path += action.Direction.Arrow();
-                var nextState = TransitionFunction(state, action);
+                var nextState = TransitionFunction(state, action, false);
                 currentReward = nextState.Reward;
                 state = nextState;
             }
@@ -101,8 +110,9 @@ namespace QLearning
 
             return path.Length < 500 ? path : IN_PROGRESS;
         }
-
         private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action)
+            => TransitionFunction(currentState, action, true);
+        private QLearningNode TransitionFunction(QLearningNode currentState, MapAction action, bool mustUpdate)
         {
             var next = GetNextState(currentState, action);
 
