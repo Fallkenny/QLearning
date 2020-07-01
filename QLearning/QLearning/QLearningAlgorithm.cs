@@ -66,7 +66,7 @@ namespace QLearning
                 var nextState = TransitionFunction(CurrentState, action);
                 var newReward = action.Reward;
 
-                if (oldReward != newReward)
+                if (Math.Round(oldReward, 1) != Math.Round(newReward, 1))
                     _qTableChanged = true;
 
                 Moves++;
@@ -81,7 +81,7 @@ namespace QLearning
                 else
                     _episodesWithoutChange = 0;
 
-                if (_episodesWithoutChange >= 10)
+                if (_episodesWithoutChange >= 20)
                     this.ReachedGlobalMaximum = true;
 
                 _qTableChanged = false;
